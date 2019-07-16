@@ -50,8 +50,17 @@ function getOccurrence(array, value) {
   return count;
 }
 
+// Creates a function to return the positions of an element in array
 
-// console.log("Current Word Array: " + currentWordArray);
+function count(array,element){
+  var counts = [];
+    for (i = 0; i < array.length; i++){
+      if (array[i] === element) {  
+        counts.push(i);
+      }
+    }
+  return counts;
+}
 
 // Variables that hold references to the places in the HTML where we want to display things.
 
@@ -66,10 +75,11 @@ var youWonText = document.getElementById("you-won-text");
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
 
+  console.log("Current Word Array: " + currentWordArray);
 
   // Determines which key was pressed.
     var userGuess = event.key;
-
+    console.log(count(currentWordArray, userGuess))
   // Only run the following code block if the user presses a key in the letters array.
   if (letters.includes(userGuess)){
 
@@ -88,9 +98,11 @@ document.onkeyup = function(event) {
       currentWord = words[counter];
       currentWordArray = Array.from(currentWord);
       blanks = new Array(currentWordArray.length).fill("_");
+
+      // If there are no more words, places the users guess into the blanks array and triggers a message
     }else{
       i = currentWordArray.indexOf(userGuess);
-      blanks[i] = userGuess;
+      blanks[i] = userGuess.toUpperCase();
       youWonText.textContent = "You Won! That's pretty much amazing. I'm all out of words. THERES NO MORE WORDS! OH THE HUMANITY!";
     }
   }else{
@@ -101,9 +113,11 @@ document.onkeyup = function(event) {
     // console.log(currentWordArray);
     // console.log(words.indexOf(currentWord));
 
+    // Places the users guess into the blanks array if it is correct and has not been guessed
     if(currentWordArray.includes(userGuess) && blanks.indexOf(userGuess) < 0) {
-        i = currentWordArray.indexOf(userGuess);
-        blanks[i] = userGuess;
+        i = count(currentWordArray, userGuess);
+
+        blanks[i] = userGuess.toUpperCase();
     }
 
 
