@@ -19,8 +19,6 @@ var currentWordArray = Array.from(currentWord);
 var blanks = new Array(currentWordArray.length).fill("_");
 
 
-console.log(blanks);
-console.log(currentWord);
 console.log(currentWordArray);
 
 // Variables that hold references to the places in the HTML where we want to display things.
@@ -30,36 +28,45 @@ var winsText = document.getElementById("wins-text");
 var currentWordText = document.getElementById("current-word-text");
 var letterGuessedText = document.getElementById("letters-guessed-text");
 
+
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
 
-    // Determines which key was pressed.
+  // Determines which key was pressed.
     var userGuess = event.key;
 
   // Only run the following code block if the user presses a key in the letters array.
   if (letters.includes(userGuess)){
 
-    if (currentWordArray.includes(userGuess)){
+    if(currentWordArray.includes(userGuess) && blanks.indexOf(userGuess) < 0) {
         i = currentWordArray.indexOf(userGuess);
         blanks[i] = userGuess;
-        console.log(blanks);
+        console.log("index of blanks = " + blanks.indexOf("_"));
 
+  // Incriment wins and reset the game if all the blanks are filled
+      if(blanks.indexOf("_") < 0){
+        console.log(blanks);
+        wins++;
+        blanks = new Array(currentWordArray.length).fill("_");
+        currentWord = words[Math.floor(Math.random() * words.length)];
+        guesses = 12;
+        lettersGuessed = [];
+}
     }else{
   // Take away a guess if the letter is not in the currentWordArray and add the letter to letters guessed
-        if(lettersGuessed.includes(userGuess)){
-          return;
-        }else{
-        guesses = guesses - 1;
-        lettersGuessed.push(" " + userGuess);
+        if(lettersGuessed.indexOf(userGuess) < 0 && (blanks.indexOf(userGuess) < 0)){
+        guesses--;
+        lettersGuessed.push(userGuess);
         console.log(guesses);
         }
     }
+
     // Hide the directions
     directionsText.textContent = "";
 
     // Display the .
     winsText.textContent = "Wins: " + wins;
-    currentWordText.textContent = blanks.join(" ");
+    currentWordText.textContent = blanks; //.join(" ")
     letterGuessedText.textContent = lettersGuessed;
   };
 };
