@@ -4,7 +4,10 @@ var words = ["nuts", "darn", "gosh"];
 
 // Creating a variable to hold the number of wins. Starts at 0.
 var wins = 0;
-let guesses = 12;
+
+// Per game variables of guesses remaining and letters already guessed
+var guesses = 12;
+var lettersGuessed = [];
 
 // Randomly chooses a word from the words array. This is the word to be guessed.
 var currentWord = words[Math.floor(Math.random() * words.length)];
@@ -13,10 +16,10 @@ var currentWord = words[Math.floor(Math.random() * words.length)];
 var currentWordArray = Array.from(currentWord);
 
 // Creates an array of blanks the length of the word to be guessed
-var currentGuesses = new Array(currentWordArray.length).fill("_");
+var blanks = new Array(currentWordArray.length).fill("_");
 
 
-console.log(currentGuesses);
+console.log(blanks);
 console.log(currentWord);
 console.log(currentWordArray);
 
@@ -24,8 +27,8 @@ console.log(currentWordArray);
 
 var directionsText = document.getElementById("directions-text");
 var winsText = document.getElementById("wins-text");
-var guessesText = document.getElementById("guesses-text");
-var LetterGuessedText = document.getElementById("letters-guessed-text");
+var currentWordText = document.getElementById("current-word-text");
+var letterGuessedText = document.getElementById("letters-guessed-text");
 
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
@@ -38,23 +41,25 @@ document.onkeyup = function(event) {
 
     if (currentWordArray.includes(userGuess)){
         i = currentWordArray.indexOf(userGuess);
-        currentGuesses[i] = userGuess;
-        console.log(currentGuesses);
+        blanks[i] = userGuess;
+        console.log(blanks);
 
     }else{
-  // Take away a guess if the letter is not in the currentWordArray
+  // Take away a guess if the letter is not in the currentWordArray and add the letter to letters guessed
+        if(lettersGuessed.includes(userGuess)){
+          return;
+        }else{
         guesses = guesses - 1;
+        lettersGuessed.push(" " + userGuess);
         console.log(guesses);
-
+        }
     }
     // Hide the directions
     directionsText.textContent = "";
 
-    // Display the user and computer guesses, and wins/losses/ties.
-    // userChoiceText.textContent = "You chose: " + userGuess;
-    // computerChoiceText.textContent = "The computer chose: " + computerGuess;
-    // winsText.textContent = "wins: " + wins;
-    // lossesText.textContent = "losses: " + losses;
-    // tiesText.textContent = "ties: " + ties;
+    // Display the .
+    winsText.textContent = "Wins: " + wins;
+    currentWordText.textContent = blanks.join(" ");
+    letterGuessedText.textContent = lettersGuessed;
   };
 };
