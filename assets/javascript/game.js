@@ -79,7 +79,7 @@ document.onkeyup = function(event) {
 
   // Determines which key was pressed.
     var userGuess = event.key;
-    console.log(count(currentWordArray, userGuess))
+
   // Only run the following code block if the user presses a key in the letters array.
   if (letters.includes(userGuess)){
 
@@ -107,24 +107,28 @@ document.onkeyup = function(event) {
     }
   }else{
   
-
-    // console.log("Letters Guessed userGuess index: " + lettersGuessed.indexOf(userGuess));
+    // console.log("Letters Guessed userGuess index: " + lettersGuessed.indexOf(userGuess.toUpperCase()));
     // console.log("blanks userGuess index: " + blanks.indexOf(userGuess));
-    // console.log(currentWordArray);
-    // console.log(words.indexOf(currentWord));
+    // console.log(count(currentWordArray, userGuess))
+    // // console.log(currentWordArray);
+    // // console.log(words.indexOf(currentWord));
 
     // Places the users guess into the blanks array if it is correct and has not been guessed
     if(currentWordArray.includes(userGuess) && blanks.indexOf(userGuess) < 0) {
         i = count(currentWordArray, userGuess);
 
-        blanks[i] = userGuess.toUpperCase();
+        blanks[i[0]] = userGuess.toUpperCase();
+        blanks[i[1]] = userGuess.toUpperCase();
+        blanks[i[2]] = userGuess.toUpperCase();
+        blanks[i[3]] = userGuess.toUpperCase();
     }
 
 
   // Take away a guess if the letter is not in the currentWordArray and add the letter to letters guessed
-        if(lettersGuessed.indexOf(userGuess) < 0 && (blanks.indexOf(userGuess) < 0)){
+        if(lettersGuessed.indexOf(userGuess.toUpperCase()) < 0 && (blanks.indexOf(userGuess.toUpperCase()) < 0)){
         guesses--;
         lettersGuessed.push(userGuess.toUpperCase());
+
         
    // Resets the game if the guess count reaches zero     
         if(guesses <= 0){
