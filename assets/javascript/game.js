@@ -2,6 +2,27 @@
 var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var words = ["nuts", "darn", "gosh", "what", "omfg"];
 
+// Creates a function to randomize an array
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+shuffle(words);
 // Creating a variable to hold the number of wins. Starts at 0.
 var wins = 0;
 
@@ -9,12 +30,9 @@ var wins = 0;
 var guesses = 12;
 var lettersGuessed = [];
 
-// Randomly chooses a word from the words array. This is the word to be guessed.
-var currentWord = words[Math.floor(Math.random() * words.length)];
-
-// An array variable to keep track of the words seen already
-
-var wordsSeen = [currentWord];
+// Creates a counter variable to progress through the words and creates a varaiable to hold the current word.
+var counter = 0
+var currentWord = words[counter];
 
 // Creates an array from the word to be guessed and sets it as a variable
 var currentWordArray = Array.from(currentWord);
@@ -45,37 +63,37 @@ var youWonText = document.getElementById("you-won-text");
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
 
+
   // Determines which key was pressed.
     var userGuess = event.key;
 
   // Only run the following code block if the user presses a key in the letters array.
   if (letters.includes(userGuess)){
-
+    console.log(counter);
+    console.log(words);
     // Check that the word has not been guessed before proceeding.
     if(getOccurrence(blanks, "_") == 1 && currentWordArray.indexOf(userGuess) == blanks.indexOf("_"))
-    { 
+    { if(counter < words.length - 1){
     // Incriment wins and resets the game if the word has been guessed
       wins++;
-      w = words.indexOf(currentWord);
-      blanks = new Array(currentWordArray.length).fill("_");
+      counter++;
       guesses = 12;
       lettersGuessed = [];
-      if(i < words.length - 1){
-        i++;
-      }else{
-      w = 0;
-      }
-    currentWord = words[w];
-
-    youWonText = "You Won! That's pretty much amazing. Why don't you try again? Guess another letter to continue!";
-
+      currentWord = words[counter];
+      currentWordArray = Array.from(currentWord);
+      blanks = new Array(currentWordArray.length).fill("_");
     }else{
+      i = currentWordArray.indexOf(userGuess);
+      blanks[i] = userGuess;
+      youWonText.textContent = "You Won! That's pretty much amazing. I'm all out of words. THERES NO MORE WORDS! OH THE HUMANITY!";
+    }
+  }else{
   
 
-    // console.log("index _ in blanks = " + blanks.indexOf("_"));
     console.log("Letters Guessed userGuess index: " + lettersGuessed.indexOf(userGuess));
     console.log("blanks userGuess index: " + blanks.indexOf(userGuess));
     console.log(currentWordArray);
+    console.log(words.indexOf(currentWord));
 
     if(currentWordArray.includes(userGuess) && blanks.indexOf(userGuess) < 0) {
         i = currentWordArray.indexOf(userGuess);
@@ -88,10 +106,12 @@ document.onkeyup = function(event) {
         guesses--;
         lettersGuessed.push(userGuess);
         if(guesses <= 0){
-          blanks = new Array(currentWordArray.length).fill("_");
-          currentWord = words[Math.floor(Math.random() * words.length)];
+          counter++;
           guesses = 12;
           lettersGuessed = [];
+          currentWord = words[counter];
+          currentWordArray = Array.from(currentWord);
+          blanks = new Array(currentWordArray.length).fill("_");
         }
 
         }
