@@ -1,6 +1,6 @@
 // variables for potential letters and the words that may be selected to guess
 var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var words = ["nuts", "darn", "gosh", "what", "omfg"];
+var words = ["tipsy", "bashed", "befuddled", "buzzed", "crocked", "crocked", "flushed", "flying", "glazed", "inebriated", "laced", "lit", "muddled", "plastered", "potted", "sloshed", "stewed", "tanked", "totaled", "wasted", "juiced"];
 
 // Creates a function to randomize an array
 
