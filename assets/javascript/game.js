@@ -22,7 +22,10 @@ function shuffle(array) {
 
   return array;
 };
+
+// Randomizes the words to guess
 shuffle(words);
+
 // Creating a variable to hold the number of wins. Starts at 0.
 var wins = 0;
 
@@ -48,7 +51,7 @@ function getOccurrence(array, value) {
 }
 
 
-console.log(currentWordArray);
+// console.log("Current Word Array: " + currentWordArray);
 
 // Variables that hold references to the places in the HTML where we want to display things.
 
@@ -69,11 +72,14 @@ document.onkeyup = function(event) {
 
   // Only run the following code block if the user presses a key in the letters array.
   if (letters.includes(userGuess)){
-    console.log(counter);
-    console.log(words);
+
+    // console.log("Counter: " + counter);
+    // console.log("Shuffled Words Array: " + words);
+
     // Check that the word has not been guessed before proceeding.
     if(getOccurrence(blanks, "_") == 1 && currentWordArray.indexOf(userGuess) == blanks.indexOf("_"))
     { if(counter < words.length - 1){
+
     // Incriment wins and resets the game if the word has been guessed
       wins++;
       counter++;
@@ -90,10 +96,10 @@ document.onkeyup = function(event) {
   }else{
   
 
-    console.log("Letters Guessed userGuess index: " + lettersGuessed.indexOf(userGuess));
-    console.log("blanks userGuess index: " + blanks.indexOf(userGuess));
-    console.log(currentWordArray);
-    console.log(words.indexOf(currentWord));
+    // console.log("Letters Guessed userGuess index: " + lettersGuessed.indexOf(userGuess));
+    // console.log("blanks userGuess index: " + blanks.indexOf(userGuess));
+    // console.log(currentWordArray);
+    // console.log(words.indexOf(currentWord));
 
     if(currentWordArray.includes(userGuess) && blanks.indexOf(userGuess) < 0) {
         i = currentWordArray.indexOf(userGuess);
@@ -104,7 +110,9 @@ document.onkeyup = function(event) {
   // Take away a guess if the letter is not in the currentWordArray and add the letter to letters guessed
         if(lettersGuessed.indexOf(userGuess) < 0 && (blanks.indexOf(userGuess) < 0)){
         guesses--;
-        lettersGuessed.push(userGuess);
+        lettersGuessed.push(userGuess.toUpperCase());
+        
+   // Resets the game if the guess count reaches zero     
         if(guesses <= 0){
           counter++;
           guesses = 12;
@@ -119,7 +127,7 @@ document.onkeyup = function(event) {
         // Hide the directions
     directionsText.textContent = "";
 
-    // Display the .
+    // Display the text associated with each element in the game
     winsText.textContent = "Wins: " + wins;
     currentWordText.textContent = "Current Word: " + blanks.join(" ");
     guessesRemainingText.textContent = "Guesses Remaining: " + guesses;
