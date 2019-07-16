@@ -1,10 +1,24 @@
 // variables for potential letters and the words that may be selected to guess
-var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "_"];
+var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var words = ["nuts", "darn", "gosh"];
 
 // Creating a variable to hold the number of wins. Starts at 0.
 var wins = 0;
+let guesses = 12;
 
+// Randomly chooses a word from the words array. This is the word to be guessed.
+var currentWord = words[Math.floor(Math.random() * words.length)];
+
+// Creates an array from the word to be guessed and sets it as a variable
+var currentWordArray = Array.from(currentWord);
+
+// Creates an array of blanks the length of the word to be guessed
+var currentGuesses = new Array(currentWordArray.length).fill("_");
+
+
+console.log(currentGuesses);
+console.log(currentWord);
+console.log(currentWordArray);
 
 // Variables that hold references to the places in the HTML where we want to display things.
 
@@ -19,58 +33,28 @@ document.onkeyup = function(event) {
     // Determines which key was pressed.
     var userGuess = event.key;
 
-  // Randomly chooses a word from the words array. This is the word to be guessed.
-    var currentWord = words[Math.floor(Math.random() * words.length)];
-
-  // Creates an array from the word to be guessed and sets it as a variable
-    var currentArray = Array.from()
-
   // Only run the following code block if the user presses a key in the letters array.
-  if (letters.indexOf(userGuess) >= 0){
+  if (letters.includes(userGuess)){
 
-    // If we choose rock and the computer guesses scissors, increment our wins variable.
-    if ((userGuess === "r") && (computerGuess === "s")) {
-      wins++;
-    }
+    if (currentWordArray.includes(userGuess)){
+        i = currentWordArray.indexOf(userGuess);
+        currentGuesses[i] = userGuess;
+        console.log(currentGuesses);
 
-    // If we choose rock and the computer guesses paper, increment our losses variable.
-    if ((userGuess === "r") && (computerGuess === "p")) {
-      losses++;
-    }
+    }else{
+  // Take away a guess if the letter is not in the currentWordArray
+        guesses = guesses - 1;
+        console.log(guesses);
 
-    // If we choose scissors and the computer guesses rock, increment our losses variable.
-    if ((userGuess === "s") && (computerGuess === "r")) {
-      losses++;
-    }
-
-    // If we choose scissors and the computer guesses paper, increment our wins variable.
-    if ((userGuess === "s") && (computerGuess === "p")) {
-      wins++;
-    }
-
-    // If we choose paper and the computer guesses rock, increment our wins variable.
-    if ((userGuess === "p") && (computerGuess === "r")) {
-      wins++;
-    }
-
-    // If we choose paper and the computer guesses scissors, increment our losses variable.
-    if ((userGuess === "p") && (computerGuess === "s")) {
-      losses++;
-    }
-
-    // If we choose the same thing as the computer, increment our ties variable.
-    if (userGuess === computerGuess) {
-      ties++;
-    }
     }
     // Hide the directions
     directionsText.textContent = "";
 
     // Display the user and computer guesses, and wins/losses/ties.
-    userChoiceText.textContent = "You chose: " + userGuess;
-    computerChoiceText.textContent = "The computer chose: " + computerGuess;
-    winsText.textContent = "wins: " + wins;
-    lossesText.textContent = "losses: " + losses;
-    tiesText.textContent = "ties: " + ties;
-  }
+    // userChoiceText.textContent = "You chose: " + userGuess;
+    // computerChoiceText.textContent = "The computer chose: " + computerGuess;
+    // winsText.textContent = "wins: " + wins;
+    // lossesText.textContent = "losses: " + losses;
+    // tiesText.textContent = "ties: " + ties;
+  };
 };
